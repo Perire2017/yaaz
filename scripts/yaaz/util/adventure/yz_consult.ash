@@ -158,7 +158,7 @@ string maybe_banish(monster foe)
   {
     banish = "skill breathe out";
   }
-  else if (have_skill($skill[snokebomb]) && my_mp() > mp_cost($skill[snokebomb]))
+  else if (have_skill($skill[snokebomb]) && my_mp() > mp_cost($skill[snokebomb]) && get_property("_snokebombUsed") < 3  )
   {
     banish = "skill snokebomb";
   }
@@ -401,6 +401,7 @@ string yz_consult(int round, string mob, string text)
     }
   }
 
-  debug("Handing off to your default CCS script to decide what to do.");
-  return get_ccs_action(round);
+  string ccs = get_ccs_action(round);
+  debug("Handing off to your default CCS script to decide what to do: " + wrap(ccs, COLOR_MONSTER));
+  return ccs;
 }
